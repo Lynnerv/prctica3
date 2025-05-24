@@ -6,9 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
 // Agrega el DbContext para guardar feedback usando SQLite
 builder.Services.AddDbContext<FeedbackDbContext>(options =>
     options.UseSqlite("Data Source=feedback.db"));
+
+// Agrega PostService que usa HttpClient para consumir JSONPlaceholder
+builder.Services.AddHttpClient<prctica3.Services.PostService>();
+
 
 var app = builder.Build();
 
