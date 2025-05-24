@@ -35,6 +35,6 @@ app.UseAuthorization();
 // Configura las rutas del controlador MVC por defecto
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Noticias}/{action=Index}/{id?}");
 
 app.Run();

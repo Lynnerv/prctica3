@@ -4,31 +4,45 @@
     ViewData["Title"] = "Detalle de Noticia";
 }
 
-<h2>@Model.Post.Title</h2>
-<p>@Model.Post.Body</p>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="card-title">@Model.Post.Title</h2>
+            <p class="card-text">@Model.Post.Body</p>
 
-<p><strong>Autor:</strong> @Model.Autor?.Name (@Model.Autor?.Email)</p>
+            <p class="text-muted"><strong>Autor:</strong> @Model.Autor?.Name (<a href="mailto:@Model.Autor?.Email">@Model.Autor?.Email</a>)</p>
+        </div>
+    </div>
 
-<hr />
-<h4>Comentarios:</h4>
-<ul>
-@foreach (var comentario in Model.Comentarios)
-{
-    <li>
-        <strong>@comentario.Name:</strong> @comentario.Body
-    </li>
-}
-</ul>
+    <hr class="my-4" />
 
-<hr />
-<h4>¿Qué opinas?</h4>
-<form method="post" asp-action="Reaccion">
-    <input type="hidden" name="postId" value="@Model.Post.Id" />
-    <button name="sentimiento" value="like">👍 Me gustó</button>
-    <button name="sentimiento" value="dislike">👎 No me gustó</button>
-</form>
+    <div class="mt-4">
+        <h4>🗨️ Comentarios:</h4>
+        <ul class="list-group list-group-flush">
+            @foreach (var comentario in Model.Comentarios)
+            {
+                <li class="list-group-item">
+                    <strong>@comentario.Name:</strong> @comentario.Body
+                </li>
+            }
+        </ul>
+    </div>
 
-@if (TempData["Mensaje"] != null)
-{
-    <p style="color: darkred;">@TempData["Mensaje"]</p>
-}
+    <hr class="my-4" />
+
+    <div>
+        <h4>¿Qué opinas?</h4>
+        <form method="post" asp-action="Reaccion" class="d-flex gap-2 mt-2">
+            <input type="hidden" name="postId" value="@Model.Post.Id" />
+            <button class="btn btn-success" name="sentimiento" value="like">👍 Me gustó</button>
+            <button class="btn btn-danger" name="sentimiento" value="dislike">👎 No me gustó</button>
+        </form>
+
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-warning mt-3" role="alert">
+                @TempData["Mensaje"]
+            </div>
+        }
+    </div>
+</div>

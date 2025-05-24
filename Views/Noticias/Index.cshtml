@@ -4,14 +4,16 @@
     ViewData["Title"] = "Noticias";
 }
 
-<h2>Noticias</h2>
-<ul>
-@foreach (var item in Model)
-{
-    <li>
-        <a asp-action="Detalle" asp-route-id="@item.Post.Id">
-            @item.Post.Title
-        </a>
-    </li>
-}
-</ul>
+<div class="container mt-4">
+    <h2 class="mb-4">📰 Noticias Recientes</h2>
+
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            <a asp-action="Detalle" asp-route-id="@item.Post.Id" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">@item.Post.Title</h5>
+                <small class="text-muted">Autor: @item.Autor?.Name</small>
+            </a>
+        }
+    </div>
+</div>
