@@ -1,0 +1,12 @@
+### Obtener todos los feedbacks (GET)
+GET http://localhost:5294/api/feedbackapi
+Accept: application/json
+
+### Crear un nuevo feedback (POST)
+POST http://localhost:5294/api/feedbackapi
+Content-Type: application/json
+
+{
+  "postId": 1,
+  "sentimiento": "like"
+}
