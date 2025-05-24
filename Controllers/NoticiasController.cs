@@ -45,7 +45,7 @@ namespace prctica3.Controllers
         public async Task<IActionResult> Reaccion(int postId, string sentimiento)
         {
             using var client = new HttpClient();
-            var response = await client.PostAsJsonAsync("http://localhost:5000/api/feedback",
+            var response = await client.PostAsJsonAsync("http://localhost:5294/api/feedback",
                 new { PostId = postId, Sentimiento = sentimiento, Fecha = DateTime.Now });
 
             if (!response.IsSuccessStatusCode)
