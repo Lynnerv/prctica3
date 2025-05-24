@@ -1,27 +1,24 @@
-using Microsoft.EntityFrameworkCore; // Necesario para EF Core
-using prctica3.Data; // Importa tu DbContext
+using Microsoft.EntityFrameworkCore; // EF Core
+using prctica3.Data; // DbContext
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
-// Agrega el DbContext para guardar feedback usando SQLite
+// Usar SQLite y almacenar DB en carpeta /data (Render)
 builder.Services.AddDbContext<FeedbackDbContext>(options =>
-    options.UseSqlite("Data Source=feedback.db"));
+    options.UseSqlite("Data Source=/data/feedback.db"));
 
-// Agrega PostService que usa HttpClient para consumir JSONPlaceholder
+// Servicio HTTP para JSONPlaceholder
 builder.Services.AddHttpClient<prctica3.Services.PostService>();
-
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar middleware según entorno
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -29,12 +26,18 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
 
-// Configura las rutas del controlador MVC por defecto
+// Rutas MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Noticias}/{action=Index}/{id?}");
+
+// Ejecutar migración automáticamente en producción
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<FeedbackDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
