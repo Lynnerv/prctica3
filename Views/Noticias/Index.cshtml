@@ -1,0 +1,17 @@
+@model List<prctica3.Models.PostEnriquecido>
+
+@{
+    ViewData["Title"] = "Noticias";
+}
+
+<h2>Noticias</h2>
+<ul>
+@foreach (var item in Model)
+{
+    <li>
+        <a asp-action="Detalle" asp-route-id="@item.Post.Id">
+            @item.Post.Title
+        </a>
+    </li>
+}
+</ul>

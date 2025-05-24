@@ -1,0 +1,34 @@
+@model prctica3.Models.PostEnriquecido
+
+@{
+    ViewData["Title"] = "Detalle de Noticia";
+}
+
+<h2>@Model.Post.Title</h2>
+<p>@Model.Post.Body</p>
+
+<p><strong>Autor:</strong> @Model.Autor?.Name (@Model.Autor?.Email)</p>
+
+<hr />
+<h4>Comentarios:</h4>
+<ul>
+@foreach (var comentario in Model.Comentarios)
+{
+    <li>
+        <strong>@comentario.Name:</strong> @comentario.Body
+    </li>
+}
+</ul>
+
+<hr />
+<h4>¿Qué opinas?</h4>
+<form method="post" asp-action="Reaccion">
+    <input type="hidden" name="postId" value="@Model.Post.Id" />
+    <button name="sentimiento" value="like">👍 Me gustó</button>
+    <button name="sentimiento" value="dislike">👎 No me gustó</button>
+</form>
+
+@if (TempData["Mensaje"] != null)
+{
+    <p style="color: darkred;">@TempData["Mensaje"]</p>
+}
