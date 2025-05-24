@@ -3,6 +3,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Agrega PostService que usa HttpClient para consumir JSONPlaceholder
+builder.Services.AddHttpClient<prctica3.Services.PostService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
